@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './mainstudentpicker'
+import Main from './mainstudentpicker'
 
 
 
 ReactDOM.render(
-  <App />, document.getElementById('root')
+  <Main />, document.getElementById('root')
 )
