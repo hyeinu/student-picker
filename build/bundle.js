@@ -54,13 +54,92 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _mainstudentpicker = __webpack_require__(175);
+	var _uuid = __webpack_require__(176);
 
-	var _mainstudentpicker2 = _interopRequireDefault(_mainstudentpicker);
+	var _uuid2 = _interopRequireDefault(_uuid);
+
+	var _namelist = __webpack_require__(179);
+
+	var _namelist2 = _interopRequireDefault(_namelist);
+
+	var _teamlist = __webpack_require__(181);
+
+	var _teamlist2 = _interopRequireDefault(_teamlist);
+
+	var _random = __webpack_require__(185);
+
+	var _random2 = _interopRequireDefault(_random);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_mainstudentpicker2.default, null), document.getElementById('root'));
+	var Main = _react2.default.createClass({
+	  displayName: 'Main',
+	  getInitialState: function getInitialState() {
+	    try {
+	      var students = JSON.parse(localStorage.students);
+	    } catch (err) {
+	      var students = [];
+	    }
+	    return { students: students };
+	  },
+
+	  addStudent: function addStudent(names) {
+	    var newStudents = names.map(function (name) {
+	      var student = {};
+	      student.name = name;
+	      student.id = (0, _uuid2.default)();
+	      return student;
+	    });
+	    this.setState({ students: this.state.students.concat(newStudents) });
+	  },
+	  removeStudent: function removeStudent(id) {
+	    this.setState({ students: this.state.students.filter(function (student) {
+	        if (student.id !== id) {
+	          return student;
+	        }
+	      }) });
+	  },
+	  updateStudent: function updateStudent(id, newName) {
+	    this.setState({ students: this.state.students.map(function (student) {
+	        if (student.id === id) {
+	          var newStudent = {};
+	          newStudent.name = newName;
+	          newStudent.id = id;
+	          return newStudent;
+	        } else {
+	          return student;
+	        }
+	      })
+	    });
+	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    localStorage.students = JSON.stringify(this.state.students);
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'container' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'text-center' },
+	          'Student Roulette'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(_namelist2.default, { addStudent: this.addStudent, students: this.state.students, updateStudent: this.updateStudent, removeStudent: this.removeStudent }),
+	        _react2.default.createElement(_teamlist2.default, { students: this.state.students }),
+	        _react2.default.createElement(_random2.default, { students: this.state.students })
+	      )
+	    );
+	  }
+	});
+
+	_reactDom2.default.render(_react2.default.createElement(Main, null), document.getElementById('root'));
 
 /***/ },
 /* 1 */
@@ -21503,107 +21582,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _uuid = __webpack_require__(176);
-
-	var _uuid2 = _interopRequireDefault(_uuid);
-
-	var _namelist = __webpack_require__(179);
-
-	var _namelist2 = _interopRequireDefault(_namelist);
-
-	var _teamlist = __webpack_require__(181);
-
-	var _teamlist2 = _interopRequireDefault(_teamlist);
-
-	var _random = __webpack_require__(185);
-
-	var _random2 = _interopRequireDefault(_random);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Main = _react2.default.createClass({
-	  displayName: 'Main',
-	  getInitialState: function getInitialState() {
-	    try {
-	      var students = JSON.parse(localStorage.students);
-	    } catch (err) {
-	      var students = [];
-	    }
-	    return { students: students };
-	  },
-
-	  addStudent: function addStudent(names) {
-	    var newStudents = names.map(function (name) {
-	      var student = {};
-	      student.name = name;
-	      student.id = (0, _uuid2.default)();
-	      return student;
-	    });
-	    this.setState({ students: this.state.students.concat(newStudents) });
-	  },
-	  removeStudent: function removeStudent(id) {
-	    this.setState({ students: this.state.students.filter(function (student) {
-	        if (student.id !== id) {
-	          return student;
-	        }
-	      }) });
-	  },
-	  updateStudent: function updateStudent(id, newName) {
-	    this.setState({ students: this.state.students.map(function (student) {
-	        if (student.id === id) {
-	          var newStudent = {};
-	          newStudent.name = newName;
-	          newStudent.id = id;
-	          return newStudent;
-	        } else {
-	          return student;
-	        }
-	      })
-	    });
-	  },
-	  componentDidUpdate: function componentDidUpdate() {
-	    localStorage.students = JSON.stringify(this.state.students);
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'container' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        _react2.default.createElement(
-	          'h1',
-	          { className: 'text-center' },
-	          'Student Picker'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        _react2.default.createElement(_namelist2.default, { addStudent: this.addStudent, students: this.state.students, updateStudent: this.updateStudent, removeStudent: this.removeStudent }),
-	        _react2.default.createElement(_teamlist2.default, { students: this.state.students }),
-	        _react2.default.createElement(_random2.default, { students: this.state.students })
-	      )
-	    );
-	  }
-	});
-
-	exports.default = Main;
-
-/***/ },
+/* 175 */,
 /* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
